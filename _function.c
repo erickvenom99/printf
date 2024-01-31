@@ -33,7 +33,7 @@ int p_string(va_list arg, char buffer[], int flags,
 	int j, len = 0;
 	char *str;
 
-	str = va_arg(arg, char*);
+	str = va_arg(arg, char *);
 	UNUSED(buffer);
 	UNUSED(flags);
 	UNUSED(width);
@@ -49,7 +49,7 @@ int p_string(va_list arg, char buffer[], int flags,
 	while (str[len] != '\0')
 		len++;
 
-	if (precision < len && precision >= 0)
+	if (precision >= len && precision < len)
 		len = precision;
 
 	if (width > len)

@@ -25,7 +25,7 @@
  */
 struct dat
 {
-	char *format;
+	char format;
 	int (*ptr)(va_list, char[], int, int, int, int);
 };
 
@@ -41,6 +41,8 @@ int _printf(const char *format, ...);
 long int size_number(long int num, int size);
 int _print(const char *frmt, int *i, va_list ap, char buffer[], int flags,
 	   int width, int precision, int size);
+int print_binary(va_list types, char buffer[],
+		 int flags, int width, int precision, int size);
 int format_specifier(const char *fmrt, int *index, va_list ap,
 		      char buffer[], int flags, int width,
 		      int precision, int size);
@@ -58,7 +60,7 @@ int p_percent(va_list arg, char buffer[], int flags,
 int print_int(va_list arg, char buffer[], int flags,
 	      int width, int precision, int size);
 
-int print_unsigned(va_list types, char buffer[],
+int print_unsigned(va_list ap, char buffer[],
 		   int flags, int width, int precision, int size);
 long int size_unsgnd(unsigned long int num, int n_size);
 int print_octal(va_list types, char buffer[],
@@ -67,12 +69,11 @@ int implement_char(char c, char buffer[], int flags,
 		   int width, int precision, int size);
 int write_numbers(int _negative, int index, char buffer[],
 		  int flags, int width, int precision, int size);
-int write_num(int index, char bff[], int flags, int width,
-	      int precision, int length, char padding, char extra_c);
-int should_skip_zero_number(int index, char buffer[],
-			    int width, int precision, int length);
-void adjust_buffer_for_zero_precision(int index, char buffer[], int width,
-				      int precision, int length, char padding);
+int write_num(int ind, char buffer[], int flags, int width,
+	      int precision, int length, char padd, char extra_c);
+
+int write_num_helper(int ind, char buffer[], int flags, int width, int prec,
+		     int length, char padd, char extra_c);
 int write_buffer(int start, char buffer[], int length);
 int write_unsgnd(int is_negative, int ind,
 		 char buffer[], int flags, int width, int precision, int size);

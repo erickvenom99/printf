@@ -1,113 +1,51 @@
 #include "function_main.h"
+#include <stdarg.h>
 /**
- *  format_specifier(- Handles the logic for known format specifiers
- * @fmrt: Format string
- * @index: Pointer to the current index in the format string
- * @ap: Variadic argument list
- * @buffer: Buffer array to handle print
+ * _print - Prints an argument based on its type
+ * @format: Formatted string in which to print the arguments.
+ * @index: ind.
+ * @ap: List of arguments to be printed.
+ * @buffer: Buffer array to handle print.
  * @flags: Calculates active flags
- * @width: Width specifier
- * @precision: Precision specifier
+ * @width: get width.
+ * @precision: Precision specification
  * @size: Size specifier
- *
- * Return: Number of characters printed
+ * Return: 1 or 2;
  */
-int  format_specifier(const char *fmrt, int *index, va_list ap,
-		      char buffer[], int flags, int width,
-		      int precision, int size)
+int _print(const char *format, int *index, va_list ap, char buffer[],
+		 int flags, int width, int precision, int size)
 {
+	int i, unknown_len = 0, printed_chars = -1;
 	data array[] = {
-		{"c", p_char},
-		{"s", p_string},
-		{"%", p_percent},
-		{"i", print_int},
-		{"u", print_unsigned},
-		{"o", print_octal},
-		{"\0", NULL}
-		};
-	int i;
-	int num_counter = 0;
+		{'c', p_char}, {'s', p_string}, {'%', p_percent},
+		{'i', print_int}, {'d', print_int}, {'b', print_binary},
+		{'u', print_unsigned}, {'\0', NULL}
+	};
 
-	for (i = 0; array[i].format != NULL; i++)
-	{
-		if (fmrt[*index] == *array[i].format)
-		{
+	for (i = 0; array[i].format != '\0'; i++)
+		if (format[*index] == array[i].format)
 			return (array[i].ptr(ap, buffer, flags, width,
-					     precision, size));
-		}
-	}
-
-	return (num_counter);
-}
-#include "function_main.h"
-/**
- * unknown_specifier - Handles the logic for unknown format specifiers
- * @fmrt: Format string
- * @index: Pointer to the current index in the format string
- * @buffer: Buffer array to handle print
- * @width: Width specifier
- *
- * Return: Number of characters printed
- */
-int unknown_specifier(const char *fmrt, int *index,
-				    char buffer[], int width)
-{
-	int unfixed_len = 0;
-
-	UNUSED(buffer);
-	if (fmrt[*index] == '\0')
+					    precision, size));
+	if (array[i].format == '\0')
 	{
-		return (-1);
-	}
-
-	unfixed_len = unfixed_len + write(1, "%%", 1);
-	if (fmrt[*index - 1] == ' ')
-	{
-		unfixed_len = unfixed_len + write(1, " ", 1);
-	}
-	else if (width)
-	{
-		--(*index);
-		while (fmrt[*index] != '%' && fmrt[*index] != '\0')
+		if (format[*index] == '\0')
+			return (-1);
+		unknown_len += write(1, "%%", 1);
+		if (format[*index - 1] == ' ')
+			unknown_len += write(1, " ", 1);
+		else if (width)
 		{
 			--(*index);
+			while (format[*index] != ' ' && format[*index] != '%')
+				--(*index);
+			if (format[*index] == ' ')
+				--(*index);
+			return (1);
 		}
-		if (fmrt[*index] == ' ')
-		{
-			--(*index);
-		}
-		return (1);
+		unknown_len += write(1, &format[*index], 1);
+		return (unknown_len);
 	}
-	unfixed_len = unfixed_len + write(1, &fmrt[*index], 1);
-
-	return (unfixed_len);
-}
-#include "function_main.h"
-/**
- * _print- Handles the format specifier and calls the appropriate handler
- * @fmrt: Format string
- * @index: Pointer to the current index in the format string
- * @ap: Variadic argument list
- * @buffer: Buffer array to handle print
- * @flags: Calculates active flags
- * @width: Width specifier
- * @precision: Precision specifier
- * @size: Size specifier
- *
- * Return: Number of characters printed
- */
-int _print(const char *fmrt, int *index, va_list ap, char buffer[],
-	   int flags, int width, int precision, int size)
-{
-	int result = format_specifier(fmrt, index, ap, buffer, flags,
-				      width, precision, size);
-
-	if (result == 0)
-	{
-		result = (unknown_specifier(fmrt, index, buffer, width));
-	}
-
-	return (result);
+	return (printed_chars);
 }
 /******implement_char********/
 #include "function_main.h"
