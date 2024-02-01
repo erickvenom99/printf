@@ -23,12 +23,12 @@ int _printf(const char *format, ...)
 		{
 			buffer[b_index++] = format[i];
 			if (b_index == BUFFER_SIZE)
-				print_buffer(&b_index, buffer);
+				p_buffer(&b_index, buffer);
 			num_counter++;
 		}
 		else
 		{
-			print_buffer(&b_index, buffer);
+			p_buffer(&b_index, buffer);
 			flags = get_flags(format, &i);
 
 			width = get_width(format, &i, ap);
@@ -39,21 +39,21 @@ int _printf(const char *format, ...)
 			       buffer, flags, width, precision, size);
 			if (save_print == -1)
 				return (-1);
-			num_counter += save_print;
+			num_counter = num_counter + save_print;
 		}
 	}
-	print_buffer(&b_index, buffer);
+	p_buffer(&b_index, buffer);
 	va_end(ap);
 	return (num_counter);
 }
 /************PRINT_BUFFER************************/
 /**
- *print_buffer-Prints character buffer up to a specified index.
+ *p_buffer-Prints character buffer up to a specified index.
  *
  * @b_index: Pointer to an integer representing index.
  * @buffer: the character buffer to be printed.
  */
-void print_buffer(int *b_index, char buffer[])
+void p_buffer(int *b_index, char buffer[])
 {
 	if (*b_index > 0)
 	{

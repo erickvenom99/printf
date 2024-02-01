@@ -50,7 +50,7 @@ int unknown_specifier(const char *fmrt, int *index, char buffer[], int width);
 int format_spec(const char *fmrt, int *index, va_list ap,
 		char buffer[], int flags, int width,
 		int precision, int size);
-void print_buffer(int *b_index, char buffer[]);
+void p_buffer(int *b_index, char buffer[]);
 int p_char(va_list arg, char buffer[], int flags,
 	   int width, int precision, int size);
 int p_string(va_list arg, char buffer[],

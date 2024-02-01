@@ -46,25 +46,25 @@ int write_unsgnd(int is_negative, int index,
 		 int flags, int width, int precision, int size)
 {
 	int length = BUFFER_SIZE - index - 1, i = 0;
-	char padd = ' ';
+	char padding = ' ';
 
 	UNUSED(is_negative);
 	UNUSED(size);
 	if (precision == 0 && index == BUFFER_SIZE - 2 && buffer[index] == '0')
 		return (0);
 	if (precision > 0 && precision < length)
-		padd = ' ';
+		padding = ' ';
 	while (precision > length)
 	{
 		buffer[--index] = '0';
 		length++;
 	}
 	if ((flags & F_ZERO) && !(flags & F_MINUS))
-		padd = '0';
+		padding = '0';
 	if (width > length)
 	{
 		for (i = 0; i < width - length; i++)
-			buffer[i] = padd;
+			buffer[i] = padding;
 		buffer[i] = '\0';
 
 		if (flags & F_MINUS)
@@ -84,97 +84,102 @@ int write_unsgnd(int is_negative, int index,
 /*********WRITEBUFF*******************/
 #include "function_main.h"
 /**
- * write_num - Writes a number to the output
+ * write_num - Writes to output
  *
- * @ind: The starting index in the buffer.
- * @buffer:The buffer to write the number to.
- * @flags:The formatting flags.
- * @width:The minimum width of the output.
- * @prec:The precision (number of digits after the decimal point).
+ * @index: The starting index in the buffer.
+ * @buffer: The buffer to write the number to.
+ * @flags: The formatting flags.
+ * @width: The minimum width of the output.
+ * @precision: The precision (number of digits after the decimal point).
  * @length: The length of the number to be written.
- * @padd: The padding character.
+ * @padding: The padding character.
  * @extra_c: An extra character to be added to the output.
- * @return: The number of characters written to the output.
+ *
+ * Return:  number of characters.
  */
-int write_num(int ind, char buffer[], int flags, int width, int prec,
-	      int length, char padd, char extra_c)
+int write_num(int index, char buffer[], int flags, int width, int precision,
+	      int length, char padding, char extra_c)
 {
-	if (prec == 0 && ind == BUFFER_SIZE - 2 &&
-	    buffer[ind] == '0' && width == 0)
+	if (precision == 0 && index == BUFFER_SIZE - 2 &&
+	    buffer[index] == '0' && width == 0)
 		return (0);
 
-	if (prec == 0 && ind == BUFFER_SIZE - 2 && buffer[ind] == '0')
-		buffer[ind] = padd = ' ';
+	if (precision == 0 && index == BUFFER_SIZE - 2 && buffer[index] == '0')
+		buffer[index] = padding = ' ';
 
-	if (prec > 0 && prec < length)
-		padd = ' ';
+	if (precision > 0 && precision < length)
+		padding = ' ';
 
-	while (prec > length)
-		buffer[--ind] = '0', length++;
+	while (precision > length)
+		buffer[--index] = '0', length++;
 
 	if (extra_c != 0)
 		length++;
 
 	if (width > length)
 	{
-		return (write_num_helper(ind, buffer, flags, width, prec,
-					 length, padd, extra_c));
+		return (write_num_helper(index, buffer, flags, width, precision,
+					 length, padding, extra_c));
 	}
 
 	if (extra_c)
-		buffer[--ind] = extra_c;
+		buffer[--index] = extra_c;
 
-	return (write(1, &buffer[ind], length));
+	return (write(1, &buffer[index], length));
 }
 
 #include "function_main.h"
 /**
- * write_num_helper  writing a number with additional formatting
+ * write_num_helper - writing with  formatting
  *
- * @ind: The starting index in the buffer.
+ * @index: The starting index in the buffer.
  * @buffer:The buffer to write the number to.
  * @flags:The formatting flags.
  * @width:The minimum width of the output.
- * @prec:The precision (number of digits after the decimal point).
+ * @precision:The precision (number of digits after the decimal point).
  * @length: The length of the number to be written.
- * @padd: The padding character.
+ * @padding: The padding character.
  * @extra_c: An extra character to be added to the output.
- * @return: The number of characters written to the output.
+ *
+ * Return: The number of characters written to the output.
  */
-int write_num_helper(int ind, char buffer[], int flags, int width,
-		     int __attribute__((unused))prec, int length,
-		     char padd, char extra_c)
+int write_num_helper(int index, char buffer[], int flags, int width,
+		     int precision, int length,
+		     char padding, char extra_c)
 {
-	int i, padd_start = 1;
+	int i;
+	int padd_start = 1;
+
+	UNUSED(precision);
 
 	for (i = 1; i < width - length + 1; i++)
-		buffer[i] = padd;
+		buffer[i] = padding;
 
 	buffer[i] = '\0';
 
-	if (flags & F_MINUS && padd == ' ')
+	if (flags & F_MINUS && padding == ' ')
 	{
 		if (extra_c)
-			buffer[--ind] = extra_c;
+			buffer[--index] = extra_c;
 
-		return (write(1, &buffer[ind], length) +
+		return (write(1, &buffer[index], length) +
 			write(1, &buffer[1], i - 1));
 	}
-	else if (!(flags & F_MINUS) && padd == ' ')
+	else if (!(flags & F_MINUS) && padding == ' ')
 	{
 		if (extra_c)
-			buffer[--ind] = extra_c;
+			buffer[--index] = extra_c;
 
 		return (write(1, &buffer[1], i - 1) +
-			write(1, &buffer[ind], length));
+			write(1, &buffer[index], length));
 	}
-	else if (!(flags & F_MINUS) && padd == '0')
+	else if (!(flags & F_MINUS) && padding == '0')
 	{
 		if (extra_c)
 			buffer[--padd_start] = extra_c;
 
 		return (write(1, &buffer[padd_start], i - padd_start) +
-			write(1, &buffer[ind], length - (1 - padd_start)));
+			write(1, &buffer[index], length - (1 - padd_start)));
 	}
 	return (0);
 }
