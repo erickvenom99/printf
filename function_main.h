@@ -41,7 +41,7 @@ int _printf(const char *format, ...);
 long int size_number(long int num, int size);
 int _print(const char *frmt, int *i, va_list ap, char buffer[], int flags,
 	   int width, int precision, int size);
-int print_binary(va_list types, char buffer[],
+int p_binary(va_list types, char buffer[],
 		 int flags, int width, int precision, int size);
 int format_specifier(const char *fmrt, int *index, va_list ap,
 		      char buffer[], int flags, int width,

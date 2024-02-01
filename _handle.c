@@ -18,7 +18,7 @@ int _print(const char *format, int *index, va_list ap, char buffer[],
 	int i, unknown_len = 0, printed_chars = -1;
 	data array[] = {
 		{'c', p_char}, {'s', p_string}, {'%', p_percent},
-		{'i', print_int}, {'d', print_int}, {'b', print_binary},
+		{'i', print_int}, {'d', print_int}, {'b', p_binary},
 		{'u', print_unsigned}, {'\0', NULL}
 	};
 
