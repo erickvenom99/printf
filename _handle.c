@@ -1,21 +1,21 @@
 #include "function_main.h"
 #include <stdarg.h>
 /**
- * _print - Prints an argument based on its type
- * @format: Formatted string in which to print the arguments.
- * @index: ind.
- * @ap: List of arguments to be printed.
+ * _print - Prints an argument
+ * @format: format string to print the arguments.
+ * @index: index.
+ * @ap: list of arguments to be printed.
  * @buffer: Buffer array to handle print.
  * @flags: Calculates active flags
  * @width: get width.
- * @precision: Precision specification
+ * @precision: Precision specifier
  * @size: Size specifier
  * Return: 1 or 2;
  */
 int _print(const char *format, int *index, va_list ap, char buffer[],
 		 int flags, int width, int precision, int size)
 {
-	int i, unknown_len = 0, printed_chars = -1;
+	int i, unknown_len = 0, num_counter = -1;
 	data array[] = {
 		{'c', p_char}, {'s', p_string}, {'%', p_percent},
 		{'i', print_int}, {'d', print_int}, {'b', print_binary},
@@ -45,7 +45,7 @@ int _print(const char *format, int *index, va_list ap, char buffer[],
 		unknown_len += write(1, &format[*index], 1);
 		return (unknown_len);
 	}
-	return (printed_chars);
+	return (num_counter);
 }
 /******implement_char********/
 #include "function_main.h"

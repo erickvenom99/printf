@@ -1,6 +1,6 @@
 #include "function_main.h"
 /**
- * p_char - Prints a char
+ * p_char - Prints character
  * @arg: argument in list
  * @buffer: buffer array to handle print
  * @flags:  calculates active flags
@@ -19,7 +19,7 @@ int p_char(va_list arg, char buffer[],
 #include "function_main.h"
 /**
  * p_string - Prints a string
- * @arg: List of arguments
+ * @ap: List of arguments
  * @buffer: Buffer array to handle print (not used in this function)
  * @flags: Calculates active flags (not used in this function)
  * @width: Width specification (not used in this function)
@@ -27,13 +27,13 @@ int p_char(va_list arg, char buffer[],
  * @size: Size specifier (not used in this function)
  * Return: Number of characters printed
  */
-int p_string(va_list arg, char buffer[], int flags,
+int p_string(va_list ap, char buffer[], int flags,
 	     int width, int precision, int size)
 {
 	int j, len = 0;
 	char *str;
 
-	str = va_arg(arg, char *);
+	str = va_arg(ap, char *);
 	UNUSED(buffer);
 	UNUSED(flags);
 	UNUSED(width);
@@ -42,8 +42,8 @@ int p_string(va_list arg, char buffer[], int flags,
 	if (str == NULL)
 	{
 		str = "(null)";
-		if (precision >= 6)
-			str = "      ";
+		if (precision >= 5)
+			str = "     ";
 	}
 
 	while (str[len] != '\0')

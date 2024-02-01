@@ -1,6 +1,6 @@
 #include "function_main.h"
 /**
- *size_number - Casts a number to the specified size
+ * size_number - Casts a number to the specified size
  * @num: number to be casted.
  * @n_size: number indicating the type to be casted.
  *
@@ -22,7 +22,7 @@ long int size_number(long int num, int n_size)
 /**
  * size_unsgnd - Casts a number to the specified size
  * @num: Number to be casted
- * @size: Number indicating the type to be casted
+ * @n_size: Number indicating the type to be casted
  *
  * Return: Casted value of num
  */
