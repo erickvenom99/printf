@@ -1,4 +1,4 @@
-#include "function_main.h"
+#include "main.h"
 /**
  * print_unsigned - Prints an unsigned number
  * @ap: List a of arguments
@@ -34,7 +34,7 @@ int print_unsigned(va_list ap, char buffer[],
 }
 
 /*************BINARY ****************/
-#include "function_main.h"
+#include "main.h"
 /**
  * p_binary - Prints an unsigned number
  * @ap: Lista of arguments

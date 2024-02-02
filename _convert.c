@@ -1,4 +1,4 @@
-#include "function_main.h"
+#include "main.h"
 /**
  * size_number - Casts a number to the specified size
  * @num: number to be casted.
@@ -18,7 +18,7 @@ long int size_number(long int num, int n_size)
 	}
 	return ((int)num);
 }
-
+#include "main.h"
 /**
  * size_unsgnd - Casts a number to the specified size
  * @num: Number to be casted

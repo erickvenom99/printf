@@ -1,4 +1,4 @@
-#include "function_main.h"
+#include "main.h"
 #include <stdarg.h>
 /**
  * _print - Prints an argument
@@ -48,7 +48,7 @@ int _print(const char *format, int *index, va_list ap, char buffer[],
 	return (num_counter);
 }
 /******implement_char********/
-#include "function_main.h"
+#include "main.h"
 /**
  * implement_char - Prints a string
  * @c: char types.

@@ -1,4 +1,4 @@
-#include "function_main.h"
+#include "main.h"
 /**
  * write_numbers - Prints a number
  * @_negative: Flag indicating if the number is negative
@@ -28,7 +28,7 @@ int write_numbers(int _negative, int index, char buffer[],
 	return (write_num(index, buffer, flags, width, precision,
 			  len, pad, xtra_char));
 }
-#include "function_main.h"
+#include "main.h"
 /**
  * write_unsgnd - Writes an unsigned number
  * @is_negative: Number indicating if the num is negative
@@ -81,8 +81,7 @@ int write_unsgnd(int is_negative, int index,
 	return (write(1, &buffer[index], length));
 }
 
-/*********WRITEBUFF*******************/
-#include "function_main.h"
+#include "main.h"
 /**
  * write_num - Writes to output
  *
@@ -128,7 +127,7 @@ int write_num(int index, char buffer[], int flags, int width, int precision,
 	return (write(1, &buffer[index], length));
 }
 
-#include "function_main.h"
+#include "main.h"
 /**
  * write_num_helper - writing with  formatting
  *
