@@ -1,4 +1,4 @@
-#include "function_main.h"
+#include "main.h"
 /**
  * _printf - Printf function
  * @format: format.
@@ -46,7 +46,8 @@ int _printf(const char *format, ...)
 	va_end(ap);
 	return (num_counter);
 }
-/************PRINT_BUFFER************************/
+/************P_BUFFER************************/
+#include "main.h"
 /**
  *p_buffer-Prints character buffer up to a specified index.
  *

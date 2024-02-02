@@ -1,4 +1,4 @@
-#include "function_main.h"
+#include "main.h"
 /**
  * get_flags - Calculates active flags
  * @format: Formatted string in which to print the arguments
@@ -7,15 +7,16 @@
  */
 int get_flags(const char *format, int *i)
 {
-	int j, curr_i;
+	int j, current_index;
 	int flags = 0;
 	const char FLAGS_CH[] = {'-', '+', '0', '#', ' ', '\0'};
 	const int FLAGS_ARR[] = {F_MINUS, F_PLUS, F_ZERO, F_HASH, F_SPACE, 0};
 
-	for (curr_i = *i + 1; format[curr_i] != '\0'; curr_i++)
+	for (current_index = *i + 1; format[current_index] != '\0';
+	     current_index++)
 	{
 		for (j = 0; FLAGS_CH[j] != '\0'; j++)
-			if (format[curr_i] == FLAGS_CH[j])
+			if (format[current_index] == FLAGS_CH[j])
 			{
 				flags |= FLAGS_ARR[j];
 				break;
@@ -25,52 +26,52 @@ int get_flags(const char *format, int *i)
 			break;
 	}
 
-	*i = curr_i - 1;
+	*i = current_index - 1;
 
 	return (flags);
 }
 
-#include "function_main.h"
+#include "main.h"
 /**
  * get_precision - Calculates the precision for printing
  * @format: Formatted string in which to print the arguments
  * @i: List of arguments to be printed.
- * @list: list of arguments.
+ * @ap: list of arguments.
  *
  * Return: Precision.
  */
-int get_precision(const char *format, int *i, va_list list)
+int get_precision(const char *format, int *i, va_list ap)
 {
-	int curr_i = *i + 1;
+	int current_index = *i + 1;
 	int precision = -1;
 
-	if (format[curr_i] != '.')
+	if (format[current_index] != '.')
 		return (precision);
 
 	precision = 0;
 
-	for (curr_i += 1; format[curr_i] != '\0'; curr_i++)
+	for (current_index += 1; format[current_index] != '\0'; current_index++)
 	{
-		if (is_digit(format[curr_i]))
+		if (_digit(format[current_index]))
 		{
 			precision *= 10;
-			precision += format[curr_i] - '0';
+			precision += format[current_index] - '0';
 		}
-		else if (format[curr_i] == '*')
+		else if (format[current_index] == '*')
 		{
-			curr_i++;
-			precision = va_arg(list, int);
+			current_index++;
+			precision = va_arg(ap, int);
 			break;
 		}
 		else
 			break;
 	}
 
-	*i = curr_i - 1;
+	*i = current_index - 1;
 
 	return (precision);
 }
-#include "function_main.h"
+#include "main.h"
 /**
  * get_size - Calculates the size to cast the argument
  * @format: Formatted string in which to print the arguments
@@ -80,65 +81,66 @@ int get_precision(const char *format, int *i, va_list list)
  */
 int get_size(const char *format, int *i)
 {
-	int curr_i = *i + 1;
+	int current_index = *i + 1;
 	int size = 0;
 
-	if (format[curr_i] == 'l')
+	if (format[current_index] == 'l')
 		size = S_LONG;
-	else if (format[curr_i] == 'h')
+	else if (format[current_index] == 'h')
 		size = S_SHORT;
 
 	if (size == 0)
-		*i = curr_i - 1;
+		*i = current_index - 1;
 	else
-		*i = curr_i;
+		*i = current_index;
 
 	return (size);
 }
 
-#include "function_main.h"
+#include "main.h"
 /**
  * get_width - Calculates the width for printing
  * @format: Formatted string in which to print the arguments.
  * @i: List of arguments to be printed.
- * @list: list of arguments.
+ * @ap: list of arguments.
  *
  * Return: width.
  */
-int get_width(const char *format, int *i, va_list list)
+int get_width(const char *format, int *i, va_list ap)
 {
-	int curr_i;
+	int current_index;
 	int width = 0;
 
-	for (curr_i = *i + 1; format[curr_i] != '\0'; curr_i++)
+	for (current_index = *i + 1; format[current_index] != '\0';
+	     current_index++)
 	{
-		if (is_digit(format[curr_i]))
+		if (_digit(format[current_index]))
 		{
 			width *= 10;
-			width += format[curr_i] - '0';
+			width += format[current_index] - '0';
 		}
-		else if (format[curr_i] == '*')
+		else if (format[current_index] == '*')
 		{
-			curr_i++;
-			width = va_arg(list, int);
+			current_index++;
+			width = va_arg(ap, int);
 			break;
 		}
 		else
 			break;
 	}
 
-	*i = curr_i - 1;
+	*i = current_index - 1;
 
 	return (width);
 }
-#include "function_main.h"
+#include "main.h"
 /**
- * is_digit - Verifies if a char is a digit
+ *_digit - Verifies if a char is a digit
  * @c: Char to be evaluated
  *
  * Return: 1 if c is a digit, 0 otherwise
  */
-int is_digit(char c)
+int _digit(char c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);

@@ -1,4 +1,4 @@
-#include "function_main.h"
+#include "main.h"
 /**
  * p_char - Prints character
  * @arg: argument in list
@@ -16,7 +16,7 @@ int p_char(va_list arg, char buffer[],
 
 	return (implement_char(c, buffer, flags, width, precision, size));
 }
-#include "function_main.h"
+#include "main.h"
 /**
  * p_string - Prints a string
  * @ap: List of arguments
@@ -72,7 +72,7 @@ int p_string(va_list ap, char buffer[], int flags,
 	return (write(1, &str[0], len));
 }
 /****** PRINT*******/
-#include "function_main.h"
+#include "main.h"
 /**
  * p_percent - Prints a percent sign
  * @arg: List of arguments
@@ -95,7 +95,7 @@ int p_percent(va_list arg, char buffer[],
 	return (write(1, "%%", 1));
 }
 /****** PRINT INT *************************/
-#include "function_main.h"
+#include "main.h"
 /**
  *print_int - Print integer
  * @arg: List of arguments

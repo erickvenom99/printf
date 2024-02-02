@@ -1,4 +1,4 @@
-#include "function_main.h"
+#include "main.h"
 #include <stdarg.h>
 /**
  * _print - Prints an argument
@@ -18,7 +18,7 @@ int _print(const char *format, int *index, va_list ap, char buffer[],
 	int i, unknown_len = 0, num_counter = -1;
 	data array[] = {
 		{'c', p_char}, {'s', p_string}, {'%', p_percent},
-		{'i', print_int}, {'d', print_int}, {'b', print_binary},
+		{'i', print_int}, {'d', print_int}, {'b', p_binary},
 		{'u', print_unsigned}, {'\0', NULL}
 	};
 
@@ -48,7 +48,7 @@ int _print(const char *format, int *index, va_list ap, char buffer[],
 	return (num_counter);
 }
 /******implement_char********/
-#include "function_main.h"
+#include "main.h"
 /**
  * implement_char - Prints a string
  * @c: char types.

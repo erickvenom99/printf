@@ -1,4 +1,4 @@
-#include "function_main.h"
+#include "main.h"
 /**
  * print_unsigned - Prints an unsigned number
  * @ap: List a of arguments
@@ -34,9 +34,9 @@ int print_unsigned(va_list ap, char buffer[],
 }
 
 /*************BINARY ****************/
-#include "function_main.h"
+#include "main.h"
 /**
- * print_binary - Prints an unsigned number
+ * p_binary - Prints an unsigned number
  * @ap: Lista of arguments
  * @buffer: Buffer array to handle print
  * @flags:  Calculates active flags
@@ -45,13 +45,13 @@ int print_unsigned(va_list ap, char buffer[],
  * @size: Size specifier
  * Return: Numbers of char printed.
  */
-int print_binary(va_list ap, char buffer[],
+int p_binary(va_list ap, char buffer[],
 		 int flags, int width, int precision, int size)
 {
 	unsigned int num, mod, i, sum;
 	unsigned int a[32];
 	int count;
-	char z;
+	char x;
 
 	UNUSED(buffer);
 	UNUSED(flags);
@@ -72,9 +72,9 @@ int print_binary(va_list ap, char buffer[],
 		sum += a[i];
 		if (sum || i == 31)
 		{
-			z = '0' + a[i];
+			x = '0' + a[i];
 
-			write(1, &z, 1);
+			write(1, &x, 1);
 			count++;
 		}
 	}
