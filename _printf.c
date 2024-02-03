@@ -1,49 +1,64 @@
 #include "main.h"
 /**
- * _printf - similar to printf
- * @format: constant format
- * Return: length of format
+ * _printf - Printf function
+ * @format: format.
+ * Return: Printed chars.
  */
 int _printf(const char *format, ...)
 {
+	int num_counter = 0;
+	int save_print = 0;
+	int i, width, precision, flags, size;
+	int b_index = 0;
 	va_list ap;
-	int k = 0,  total_count = 0;
+	char buffer[BUFFER_SIZE];
+
+	if (format == NULL)
+		return (-1);
 
 	va_start(ap, format);
-	while (format[k] != '\0')
+	for (i = 0; format[i] != '\0'; i++)
 	{
-		if (format[k] == '%')
+		if (format[i] != '%')
 		{
-			++k;
-			switch (format[k])
-			{
-			case 's':
-				p_string(va_arg(ap, char *), &total_count);
-				break;
-			case 'c':
-				p_char(va_arg(ap, int), &total_count);
-				break;
-			case '%':
-				putchar('%');
-				total_count++;
-				break;
-			case 'i':
-			case 'd':
-				p_num(va_arg(ap, int), &total_count);
-				break;
-			default:
-				putchar(format[k]);
-				total_count++;
-				break;
-			}
+			buffer[b_index++] = format[i];
+			if (b_index == BUFFER_SIZE)
+				p_buffer(&b_index, buffer);
+			num_counter++;
 		}
 		else
 		{
-			putchar(format[k]);
-			total_count++;
+			p_buffer(&b_index, buffer);
+			flags = get_flags(format, &i);
+
+			width = get_width(format, &i, ap);
+			precision = get_precision(format, &i, ap);
+			size = get_size(format, &i);
+			i++;
+			save_print = _print(format, &i, ap,
+					    buffer, flags, width, precision, size);
+			if (save_print == -1)
+				return (-1);
+			num_counter = num_counter + save_print;
 		}
-		k++;
 	}
+	p_buffer(&b_index, buffer);
 	va_end(ap);
-	return (total_count);
+	return (num_counter);
+}
+/************P_BUFFER************************/
+#include "main.h"
+/**
+ *p_buffer-Prints character buffer up to a specified index.
+ *
+ * @b_index: Pointer to an integer representing index.
+ * @buffer: the character buffer to be printed.
+ */
+void p_buffer(int *b_index, char buffer[])
+{
+	if (*b_index > 0)
+	{
+		write(1, buffer, *b_index * sizeof(char));
+		*b_index = 0;
+	}
 }
